@@ -1,0 +1,23 @@
+import { scaleSize } from './mixins'
+
+// PADDING AND MARGINS
+export const INDENT_3 = scaleSize(3)
+export const INDENT_4 = scaleSize(4)
+export const INDENT_5 = scaleSize(5)
+export const INDENT_6 = scaleSize(6)
+export const INDENT_7 = scaleSize(7)
+export const INDENT_8 = scaleSize(8)
+export const INDENT_9 = scaleSize(9)
+export const INDENT_10 = scaleSize(10)
+export const INDENT_11 = scaleSize(11)
+export const INDENT_12 = scaleSize(12)
+export const INDENT_14 = scaleSize(14)
+export const INDENT_15 = scaleSize(15)
+export const INDENT_16 = scaleSize(16)
+export const INDENT_20 = scaleSize(20)
+export const INDENT_24 = scaleSize(24)
+export const INDENT_30 = scaleSize(30)
+export const INDENT_32 = scaleSize(32)
+export const INDENT_34 = scaleSize(34)
+export const INDENT_35 = scaleSize(35)
+export const INDENT_40 = scaleSize(40)

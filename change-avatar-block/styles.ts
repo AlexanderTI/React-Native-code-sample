@@ -18,7 +18,7 @@ import {
   INDENT_16,
   FONT_WEIGHT_BOLD,
   secondaryColor,
-} from '../../theme'
+} from '../theme'
 
 export const styles = StyleSheet.create({
   buttonContainer: {

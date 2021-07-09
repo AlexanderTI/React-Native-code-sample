@@ -1,67 +1,36 @@
-import React, { useState } from 'react'
-import { Text, View, Modal, ImageBackground, Alert } from 'react-native'
+import React, { useEffect } from 'react'
+import { Text, View, Modal, ImageBackground} from 'react-native'
+import { useTranslation } from 'react-i18next'
+
 import { styles } from './styles'
 import { IUser } from '../types/profile'
 import { Avatar, Button, IconButton } from './components'
-import ImagePicker, { Image } from 'react-native-image-crop-picker'
 import { imageAssets } from './assets'
-import useHandlers from './hooks/use-handlers'
-import { FileSizeValidation } from '../constants/file-size-validation'
-import { useTranslation } from 'react-i18next'
+import useCameraHandlers from './hooks/use-camera-handlers'
+import useModalHandlers from './hooks/use-modal-handlers'
+import useRequestHandlers from './hooks/use-request-handlers'
+
 
 interface IProps {
   data: IUser['person']
 }
 
-const imageSettings = {
-  width: 400,
-  height: 400,
-  cropping: true,
-  includeBase64: true,
-}
-
 const ChangeAvatarBlock: React.FC<IProps> = ({ data }) => {
   const { t } = useTranslation()
 
-  const { makeRequestOnChange } = useHandlers()
-
-  const [modalVisible, setModalVisible] = useState(false)
-  const [selectedImage, setSelectedImage] = useState<Image | null>(null)
-
-  const handleGalleryUpload = (): void => {
-    ImagePicker.openPicker(imageSettings).then((image) => {
-      validateSize(image)
-    })
-  }
-
-  const handleCameraUpload = (): void => {
-    ImagePicker.openCamera(imageSettings).then((image) => {
-      validateSize(image)
-    })
-  }
-
-  const validateSize = (image: Image) => {
-    if (image.size >= FileSizeValidation.IMAGE) {
-      Alert.alert(t(`toastMessages.error`), t('common.fileSizeError'), [
-        {
-          text: t(`forms.buttonLabels.cancel`),
-          style: 'cancel',
-        },
-      ])
-      setSelectedImage(null)
-    } else {
-      setSelectedImage(image)
-    }
-  }
-
-  const handleCancel = (): void => {
-    setSelectedImage(null)
-    setModalVisible(false)
-  }
+  const { handleCameraUpload, handleGalleryUpload, selectedImage, setSelectedImage } = useCameraHandlers()
+  const { handleCancel, modalVisible, setModalVisible } = useModalHandlers()
+  const { makeRequestOnChange } = useRequestHandlers()
 
   const handleSave = (): void => {
     selectedImage?.data && makeRequestOnChange(selectedImage.data)
   }
+
+  useEffect(() => {
+    return () => {
+      setSelectedImage(null)
+    }
+  }, [modalVisible])
 
   return (
     <View style={styles.container}>

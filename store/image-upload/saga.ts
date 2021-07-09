@@ -1,11 +1,11 @@
 import { put, call, takeEvery } from 'redux-saga/effects'
-import { userImageEdit } from '../../api/profile-edit'
-import { SagaPayload } from '../../types/saga'
+import { AxiosResponse } from 'axios'
+
 import { requestImageEdit, imageEditSuccess, imageEditError } from './slice'
 import { requestUserPersonEdit } from '../user-person-edit/slice'
-import I18n from 'i18n'
-import { AxiosResponse } from 'axios'
-import { requestErrorsSaga } from '../../common'
+import { requestErrorsSaga } from '../common'
+import { userImageEdit } from '../../api/profile-edit'
+import { SagaPayload } from '../../types/saga'
 
 export function* imageEditRequestSaga({ payload }: SagaPayload<any>) {
   try {
@@ -20,10 +20,7 @@ export function* imageEditRequestSaga({ payload }: SagaPayload<any>) {
       yield put(imageEditSuccess())
     }
   } catch (error) {
-    yield call(requestErrorsSaga, error, imageEditError, {
-      title: I18n.t(`toastMessages.error`),
-      message: error.message,
-    })
+    yield call(requestErrorsSaga, error, imageEditError)
   }
 }
 
